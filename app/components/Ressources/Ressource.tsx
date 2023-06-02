@@ -12,7 +12,6 @@ import {
   chatbubbleOutline,
 } from "ionicons/icons";
 import { LiensTelechargementsEnum } from "@/app/ressources/enums/LiensTelechargements";
-import Cors from "cors";
 
 const Ressource = ({ ressource }: any) => {
   const [liked, setLiked] = useState(false);
@@ -42,9 +41,13 @@ const Ressource = ({ ressource }: any) => {
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
         <img
-          src="https://i.imgflip.com/2xc9z0.png"
+          src={
+            LiensTelechargementsEnum.PHOTOPROFILURL +
+            ressource.utilisateur.id +
+            LiensTelechargementsEnum.DOWNLOAD
+          }
           alt="avatar"
-          style={{ height: 50, width: 50 }}
+          style={{ height: 50, width: 50, borderRadius: 25 }}
         />
         <div style={{ marginLeft: 10 }}>
           <p>
