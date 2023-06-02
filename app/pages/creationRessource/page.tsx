@@ -1,26 +1,38 @@
 "use client";
+import { RessourceEntity } from "@/app/ressources/models/RessourceEntity";
 import CategorieService from "@/app/services/CategorieService";
 import React, { Suspense, useEffect, useState } from "react";
 
 const CreationRessourcePage = () => {
   const [categories, setCategories] = useState<CategorieEntity[]>([]);
-  const [fileContent, setFileContent] = useState<string>("");
+  const [ressource, setRessource] = useState<RessourceEntity>(
+    {} as RessourceEntity
+  );
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const content = event.target?.result as string;
-        setFileContent(content);
-      };
-      reader.readAsText(file);
-    }
-  };
+  const [pieceJointe, setPieceJointe] = useState<File | null>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Do something with the file content
+    console.log("ressource", ressource);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setPieceJointe(file);
+      displayPreview(file);
+    }
+  };
+
+  const displayPreview = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const preview = document.getElementById("preview") as HTMLImageElement;
+      preview.src = e.target?.result as string;
+    };
+
+    reader.readAsDataURL(file);
   };
 
   useEffect(() => {
@@ -31,11 +43,23 @@ const CreationRessourcePage = () => {
 
   return (
     <div>
+      <p>Création d'une ressource</p>
       <Suspense fallback={<div>Chargement...</div>}>
-        <div className="ressource-card">
+        <form className="ressource-card">
           <label htmlFor="category">Catégorie:</label>
-          <select id="category" name="category" required>
-            <option value="" disabled selected>
+          <select
+            id="category"
+            name="category"
+            required
+            defaultValue={0}
+            onChange={(e) =>
+              setRessource({
+                ...ressource,
+                idCategorie: Number(e.target.value),
+              })
+            }
+          >
+            <option value="0" disabled>
               Choisir une catégorie
             </option>
             {categories.map((categorie) => (
@@ -48,34 +72,61 @@ const CreationRessourcePage = () => {
           <br />
 
           <label htmlFor="title">Titre:</label>
-          <input type="text" id="title" name="title" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            onChange={(e) => {
+              setRessource({
+                ...ressource,
+                titre: e.target.value,
+              });
+            }}
+          />
           <br />
 
           <label htmlFor="description">Description:</label>
-          <input type="text" id="description" name="description" required />
+          <input
+            type="text"
+            id="description"
+            name="description"
+            required
+            onChange={(e) => {
+              setRessource({
+                ...ressource,
+                contenu: e.target.value,
+              });
+            }}
+          />
           <br />
 
           <label htmlFor="file">Fichier:</label>
-          <input type="file" id="file" name="file" />
+          <input
+            type="file"
+            id="file"
+            name="file"
+            onChange={handleFileChange}
+          />
           <br />
 
-          {fileContent && (
+          {pieceJointe && (
             <div>
-              <h3>File content:</h3>
-              <pre>{fileContent}</pre>
+              <img id="preview" alt="File preview" />
             </div>
           )}
 
           <label htmlFor="partage">Partage:</label>
           <select id="partage" name="partage">
-            <br />
             <option value="">Public</option>
             <option value="prive">Privé</option>
           </select>
           <br />
 
-          <button type="submit">Créer la ressource</button>
-        </div>
+          <button type="submit" onSubmit={() => handleSubmit}>
+            Créer la ressource
+          </button>
+        </form>
       </Suspense>
     </div>
   );
