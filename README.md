@@ -32,3 +32,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Gestion des branches github
+
+Lors de la création d'une nouvelle fonctionnaité, voici les étapes à suivre :
+
+- Se mettre sur la branche master
+
+- Faire un `git fetch` pour mettre à jour le référentiel (récupérer une branche à été créée et publiée depuis un autre PC par exemple)
+
+- Faire un `git pull` pour tirer tous les changement sur cette branche
+
+- Créer une nouvelle branche sous la forme `tasks/nom de la fonctionnalité` (mettre `fix/` si c'est un fix)
+
+- Puis aller sur cette nouvelle branche.
+
+Une fois ces étapes faites, tu peux commencer à développer ta fonctionnalité.
+
+**Toujours sauvegarder son code (même si pas fini, c'est pas grave)**
+
+Pense bien à ton comit et push si tu pars de ton pc, comme ça on garde toujours une trace (_et ça fait monter tes stats Github_)
+
+Une fois la fonctionnalité finie, tu peux aller sur [le repos du github](https://github.com/jehanvaire/RES-REL-WEB)
+
+Et créer une nouvelle requête de tirage (pull request en français) (normalement le bouton le propose automatiquement dès que des changements sont poussés.)

@@ -2,7 +2,7 @@
 import Ressource from "@/app/components/Ressources/Ressource";
 import { RessourceEntity } from "@/app/ressources/models/RessourceEntity";
 import RessourcesService from "@/app/services/RessourcesService";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 const RessourcesPage = async () => {
   const params = {
@@ -21,11 +21,11 @@ const RessourcesPage = async () => {
   return (
     <div>
       <h1>Ressources</h1>
-      <ul>
+      <Suspense fallback={<div>Chargement des ressources...</div>}>
         {listeRessources.map((ressource) => (
           <Ressource key={ressource.id} ressource={ressource} />
         ))}
-      </ul>
+      </Suspense>
     </div>
   );
 };

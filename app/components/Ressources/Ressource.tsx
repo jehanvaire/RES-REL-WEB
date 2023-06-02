@@ -1,12 +1,24 @@
+"use client";
+
 import RessourcesService from "@/app/services/RessourcesService";
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import { IonIcon } from "@ionic/react";
+import {
+  ellipsisVertical,
+  bookmarksOutline,
+  heart,
+  heartOutline,
+  chatbubbleOutline,
+} from "ionicons/icons";
+import { LiensTelechargementsEnum } from "@/app/ressources/enums/LiensTelechargements";
+import Cors from "cors";
 
 const Ressource = ({ ressource }: any) => {
-  const [liked, setLiked] = React.useState(false);
+  const [liked, setLiked] = useState(false);
 
   function LikePublication() {
+    console.log("TODO: like publication", ressource);
     setLiked(!liked);
   }
 
@@ -35,7 +47,10 @@ const Ressource = ({ ressource }: any) => {
           style={{ height: 50, width: 50 }}
         />
         <div style={{ marginLeft: 10 }}>
-          <p>Partagé par {ressource.auteur}</p>
+          <p>
+            Partagé par {ressource.utilisateur.prenom}{" "}
+            {ressource.utilisateur.nom}
+          </p>
         </div>
         <div style={{ flex: 1 }}></div>
         <div>
@@ -50,11 +65,15 @@ const Ressource = ({ ressource }: any) => {
       <p>{ressource.contenu}</p>
       <div>
         <div>
-          {/* <img
-            src={ressource.lienImage}
+          <img
+            src={
+              LiensTelechargementsEnum.PIECESJOINTEURL +
+              ressource.pieceJointe.id +
+              LiensTelechargementsEnum.DOWNLOAD
+            }
             style={{ height: 200, width: "auto" }}
-          /> */}
-          <p>Image</p>
+          />
+          <p>{ressource.pieceJointe.type}</p>
         </div>
       </div>
       <div
@@ -63,27 +82,25 @@ const Ressource = ({ ressource }: any) => {
         <button onClick={LikePublication}>
           {liked ? (
             <IonIcon
-              name="heart"
+              icon={heart}
               size="small"
               style={{ color: "red" }}
             ></IonIcon>
           ) : (
-            <IonIcon name="heart-outline" size="small"></IonIcon>
+            <IonIcon icon={heartOutline} size="small"></IonIcon>
           )}
         </button>
         <div style={{ flex: 1 }}></div>
         <button onClick={ShowCommentsSection}>
-          <IonIcon name="chatbubble-outline" size="small"></IonIcon>
+          <IonIcon icon={chatbubbleOutline} size="small"></IonIcon>
         </button>
         <div style={{ flex: 1 }}></div>
         <button onClick={SauvegarderPublication}>
-          <IonIcon name="bookmark-outline" size="small"></IonIcon>
+          <IonIcon icon={bookmarksOutline} size="small"></IonIcon>
         </button>
         <div style={{ flex: 1 }}></div>
         <button onClick={AfficherPlusOptions}>
-          <button onClick={AfficherPlusOptions}>
-            <IonIcon icon="ellipsisVertical" size="small" />
-          </button>
+          <IonIcon icon={ellipsisVertical} size="small" />
         </button>
       </div>
     </div>
