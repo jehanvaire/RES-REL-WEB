@@ -1,6 +1,8 @@
 "use client";
+import { PieceJointeEntity } from "@/app/ressources/models/PieceJointeEntity";
 import { RessourceEntity } from "@/app/ressources/models/RessourceEntity";
 import CategorieService from "@/app/services/CategorieService";
+import RessourcesService from "@/app/services/RessourcesService";
 import React, { Suspense, useEffect, useState } from "react";
 
 const CreationRessourcePage = () => {
@@ -9,18 +11,55 @@ const CreationRessourcePage = () => {
     {} as RessourceEntity
   );
 
-  const [pieceJointe, setPieceJointe] = useState<File | null>(null);
+  const [file, setFile] = useState<File>({} as File);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Do something with the file content
-    console.log("ressource", ressource);
+
+    let type = "";
+    switch (file.type) {
+      case "image/png":
+      case "image/jpeg":
+        type = "IMAGE";
+        break;
+      case "application/pdf":
+        type = "PDF";
+        break;
+      case "video/mp4":
+        type = "VIDEO";
+        break;
+      default:
+        type = "";
+        break;
+    }
+
+    const fichier = {
+      name: file.name,
+      type: type,
+      uri: file.name,
+    };
+
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    formData.append("titre", ressource.titre);
+    formData.append("type", type);
+    formData.append("idUtilisateur", "1022");
+
+    RessourcesService.AjouterPieceJointe(formData).then(async (res) => {
+      await RessourcesService.CreerPublication({
+        idCategorie: ressource.idCategorie,
+        contenu: ressource.contenu,
+        titre: ressource.titre,
+        idUtilisateur: ressource.id,
+        idPieceJointe: res.id,
+      } as RessourceEntity);
+    });
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      setPieceJointe(file);
+      setFile(file);
       displayPreview(file);
     }
   };
@@ -45,7 +84,7 @@ const CreationRessourcePage = () => {
     <div>
       <p>Création d'une ressource</p>
       <Suspense fallback={<div>Chargement...</div>}>
-        <form className="ressource-card">
+        <form onSubmit={handleSubmit} className="ressource-card">
           <label htmlFor="category">Catégorie:</label>
           <select
             id="category"
@@ -110,7 +149,7 @@ const CreationRessourcePage = () => {
           />
           <br />
 
-          {pieceJointe && (
+          {file && (
             <div>
               <img id="preview" alt="File preview" />
             </div>
@@ -123,9 +162,7 @@ const CreationRessourcePage = () => {
           </select>
           <br />
 
-          <button type="submit" onSubmit={() => handleSubmit}>
-            Créer la ressource
-          </button>
+          <button type="submit">Créer la ressource</button>
         </form>
       </Suspense>
     </div>
