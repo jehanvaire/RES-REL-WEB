@@ -4,11 +4,7 @@ import React from "react";
 // RAFCE
 
 const HomePage = () => {
-  return (
-    <div>
-      <h1>Welcome to Traversy Merdia</h1>
-    </div>
-  );
+  return <></>;
 };
 
 export default HomePage;
