@@ -2,7 +2,11 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import Header from "./components/header";
-import { NextUIProvider } from "@nextui-org/react";
+import { createTheme, NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+const lightTheme = createTheme({ type: "light" });
+const darkTheme = createTheme({ type: "dark" });
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
@@ -32,10 +36,19 @@ export default function RootLayout({
         <link rel="icon" href="/assets/icon.png" />
       </head>
       <body className={poppins.className}>
-        <NextUIProvider>
-          <Header />
-          <main className="container">{children}</main>
-        </NextUIProvider>
+        <NextThemesProvider
+          defaultTheme="system"
+          attribute="class"
+          value={{
+            light: lightTheme.className,
+            dark: darkTheme.className,
+          }}
+        >
+          <NextUIProvider>
+            <Header />
+            <main className="container">{children}</main>
+          </NextUIProvider>
+        </NextThemesProvider>
       </body>
     </html>
   );

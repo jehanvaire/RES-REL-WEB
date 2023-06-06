@@ -1,5 +1,5 @@
 "use client";
-import { Col, Grid, Spacer, Text } from "@nextui-org/react";
+import { Col, Grid, Spacer } from "@nextui-org/react";
 import React from "react";
 import Link from "next/link";
 
@@ -25,7 +25,7 @@ const AvatarTooltip = () => {
           <h5>À regarder plus tard</h5>
         </Link>
         <Spacer y={0.5} />
-        <Link href="">
+        <Link href="/pages/parametres/">
           <h5>Paramètres</h5>
         </Link>
       </Col>
