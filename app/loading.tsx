@@ -1,9 +1,11 @@
+"use client";
+import { Loading } from "@nextui-org/react";
 import React from "react";
 
 const LoadingPage = () => {
   return (
     <div className="loader">
-      <div className="spinner"></div>
+      <Loading size="lg" />
     </div>
   );
 };
