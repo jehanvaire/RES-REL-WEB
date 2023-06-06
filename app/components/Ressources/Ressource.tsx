@@ -12,6 +12,16 @@ import {
   chatbubbleOutline,
 } from "ionicons/icons";
 import { LiensTelechargementsEnum } from "@/app/ressources/enums/LiensTelechargements";
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  Image,
+  Row,
+  Spacer,
+  Text,
+} from "@nextui-org/react";
 
 const Ressource = ({ ressource }: any) => {
   const [liked, setLiked] = useState(false);
@@ -36,77 +46,77 @@ const Ressource = ({ ressource }: any) => {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div
+    <Card style={{ display: "flex", flexDirection: "column" }}>
+      <Card.Body
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
-        <img
-          src={
-            LiensTelechargementsEnum.PHOTOPROFILURL +
-            ressource.utilisateur.id +
-            LiensTelechargementsEnum.DOWNLOAD
-          }
-          alt="avatar"
-          style={{ height: 50, width: 50, borderRadius: 25 }}
-        />
-        <div style={{ marginLeft: 10 }}>
-          <p>
-            Partagé par {ressource.utilisateur.prenom}{" "}
-            {ressource.utilisateur.nom}
-          </p>
-        </div>
-        <div style={{ flex: 1 }}></div>
-        <div>
-          <p>
-            {moment(ressource.dateCreation).fromNow() === "Invalid date"
-              ? "quelques secondes"
-              : moment(ressource.dateCreation).fromNow()}
-          </p>
-        </div>
-      </div>
-      <h1 style={{ margin: "10px 0" }}>{ressource.titre}</h1>
-      <p>{ressource.contenu}</p>
-      <div>
-        <div>
-          <img
+        <Col>
+          <Row>
+            <Avatar
+              src={
+                LiensTelechargementsEnum.PHOTOPROFILURL +
+                ressource.utilisateur.id +
+                LiensTelechargementsEnum.DOWNLOAD
+              }
+              alt="avatar"
+            />
+            <Spacer x={1} />
+            <Text>
+              Partagé par {ressource.utilisateur.prenom}{" "}
+              {ressource.utilisateur.nom}
+            </Text>
+            <div style={{ flex: 1 }}></div>
+            <Text>
+              {moment(ressource.dateCreation).fromNow() === "Invalid date"
+                ? "quelques secondes"
+                : moment(ressource.dateCreation).fromNow()}
+            </Text>
+          </Row>
+          <h2 style={{ margin: "10px 0" }}>{ressource.titre}</h2>
+          <Text>{ressource.contenu}</Text>
+          <Image
             src={
               LiensTelechargementsEnum.PIECESJOINTEURL +
               ressource.pieceJointe.id +
               LiensTelechargementsEnum.DOWNLOAD
             }
-            style={{ height: 200, width: "auto" }}
+            style={{ height: "400px" }}
           />
-          <p>{ressource.pieceJointe.type}</p>
-        </div>
-      </div>
-      <div
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-      >
-        <button onClick={LikePublication}>
-          {liked ? (
-            <IonIcon
-              icon={heart}
-              size="small"
-              style={{ color: "red" }}
-            ></IonIcon>
-          ) : (
-            <IonIcon icon={heartOutline} size="small"></IonIcon>
-          )}
-        </button>
-        <div style={{ flex: 1 }}></div>
-        <button onClick={ShowCommentsSection}>
-          <IonIcon icon={chatbubbleOutline} size="small"></IonIcon>
-        </button>
-        <div style={{ flex: 1 }}></div>
-        <button onClick={SauvegarderPublication}>
-          <IonIcon icon={bookmarksOutline} size="small"></IonIcon>
-        </button>
-        <div style={{ flex: 1 }}></div>
-        <button onClick={AfficherPlusOptions}>
-          <IonIcon icon={ellipsisVertical} size="small" />
-        </button>
-      </div>
-    </div>
+          <Spacer y={1} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Button onClick={LikePublication}>
+              {liked ? (
+                <IonIcon
+                  icon={heart}
+                  size="small"
+                  style={{ color: "red" }}
+                ></IonIcon>
+              ) : (
+                <IonIcon icon={heartOutline} size="small"></IonIcon>
+              )}
+            </Button>
+            <div style={{ flex: 1 }}></div>
+            <Button onClick={ShowCommentsSection}>
+              <IonIcon icon={chatbubbleOutline} size="small"></IonIcon>
+            </Button>
+            <div style={{ flex: 1 }}></div>
+            <Button onClick={SauvegarderPublication}>
+              <IonIcon icon={bookmarksOutline} size="small"></IonIcon>
+            </Button>
+            <div style={{ flex: 1 }}></div>
+            <Button onClick={AfficherPlusOptions}>
+              <IonIcon icon={ellipsisVertical} size="small" />
+            </Button>
+          </div>
+        </Col>
+      </Card.Body>
+    </Card>
   );
 };
 

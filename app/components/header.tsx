@@ -4,24 +4,54 @@ import React from "react";
 import iconeResRel from "../../public/assets/icon.png";
 import { IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
+import { Button, Avatar, Row, Card, Spacer, Tooltip } from "@nextui-org/react";
+import AvatarTooltip from "./AvatarTooltip";
+
+const espacement = 1;
 
 const UtilisateurConnecteLinks = () => {
   return (
     <>
-      <Link href="/pages/ressources">Ressources</Link>
-      <Link href="/pages/activites">Activités</Link>
-      <Link href="/pages/creationRessource">Créer une ressource</Link>
-      <Link href="/pages/relations">Mes relations</Link>
+      <Link href="/pages/ressources">
+        <b>Ressources</b>
+      </Link>
+      <Spacer x={espacement} />
+
+      <Link href="/pages/activites">
+        <b>Activités</b>
+      </Link>
+      <Spacer x={espacement} />
+
+      <Link href="/pages/creationRessource">
+        <b>Créer une ressource</b>
+      </Link>
+      <Spacer x={espacement} />
+
+      <Link href="/pages/relations">
+        <b>Mes relations</b>
+      </Link>
+      <div style={{ flex: 1 }}></div>
+
       <Link href="/pages/notifications">
         <IonIcon icon={notifications} />
       </Link>
-      <img
+      <Spacer x={espacement} />
+
+      {/* <img
         src="https://media.tenor.com/vxFNoJHV3I4AAAAC/chiquichico.gif"
         alt="Logo res rel"
         className="image-profil"
         height="60px"
-      />
-      <button>Se déconnecter</button>
+      /> */}
+      <Tooltip content={<AvatarTooltip />} placement="bottom">
+        <Avatar
+          src="https://media.tenor.com/vxFNoJHV3I4AAAAC/chiquichico.gif"
+          alt="Logo res rel"
+        />
+      </Tooltip>
+      <Spacer x={espacement} />
+
+      <Button>Se déconnecter</Button>
     </>
   );
 };
@@ -37,22 +67,23 @@ const InviteLinks = () => {
 
 const Header = () => {
   return (
-    <header className="header">
-      <div className="container">
-        <div className="links">
+    <Card
+    //  css={{ $$cardColor: "$colors$primary" }}
+    >
+      <Card.Body>
+        <Row justify="center" align="center">
+          <Spacer x={espacement} />
+
           <Link href="/">
-            <img
-              src={iconeResRel.src}
-              alt="Logo res rel"
-              className="logo"
-              height="60px"
-            />
+            <Avatar src={iconeResRel.src} alt="Logo res rel" />
           </Link>
 
+          <Spacer x={espacement} />
+
           <UtilisateurConnecteLinks />
-        </div>
-      </div>
-    </header>
+        </Row>
+      </Card.Body>
+    </Card>
   );
 };
 
