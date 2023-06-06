@@ -1,8 +1,8 @@
 "use client";
-import { PieceJointeEntity } from "@/app/ressources/models/PieceJointeEntity";
 import { RessourceEntity } from "@/app/ressources/models/RessourceEntity";
 import CategorieService from "@/app/services/CategorieService";
 import RessourcesService from "@/app/services/RessourcesService";
+import { Button, Card, Input, Spacer, Textarea } from "@nextui-org/react";
 import React, { Suspense, useEffect, useState } from "react";
 
 const CreationRessourcePage = () => {
@@ -82,88 +82,143 @@ const CreationRessourcePage = () => {
 
   return (
     <div>
-      <p>Création d'une ressource</p>
+      <h2
+        style={{
+          textAlign: "center",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
+      >
+        Création d'une ressource
+      </h2>
       <Suspense fallback={<div>Chargement...</div>}>
-        <form onSubmit={handleSubmit} className="ressource-card">
-          <label htmlFor="category">Catégorie:</label>
-          <select
-            id="category"
-            name="category"
-            required
-            defaultValue={0}
-            onChange={(e) =>
-              setRessource({
-                ...ressource,
-                idCategorie: Number(e.target.value),
-              })
-            }
-          >
-            <option value="0" disabled>
-              Choisir une catégorie
-            </option>
-            {categories.map((categorie) => (
-              <option key={categorie.id} value={categorie.id}>
-                {categorie.nom}
-              </option>
-            ))}
-          </select>
+        <Card
+          css={{
+            // center the card
+            margin: "auto",
+            width: "50%",
+            minWidth: "300px",
+            maxWidth: "600px",
+            // center the card
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Card.Body>
+            <form onSubmit={handleSubmit} className="ressource-card">
+              <Spacer />
+              <Input
+                type="text"
+                labelPlaceholder="Titre"
+                id="title"
+                name="title"
+                color="primary"
+                bordered
+                required
+                onChange={(e) => {
+                  setRessource({
+                    ...ressource,
+                    titre: e.target.value,
+                  });
+                }}
+                css={{
+                  width: "100%",
+                }}
+              />
+              <Spacer y={2} />
 
-          <br />
+              <Textarea
+                id="description"
+                name="description"
+                labelPlaceholder="Description"
+                color="primary"
+                bordered
+                required
+                onChange={(e) => {
+                  setRessource({
+                    ...ressource,
+                    contenu: e.target.value,
+                  });
+                }}
+                css={{
+                  width: "100%",
+                }}
+              />
+              <Spacer />
 
-          <label htmlFor="title">Titre:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            required
-            onChange={(e) => {
-              setRessource({
-                ...ressource,
-                titre: e.target.value,
-              });
-            }}
-          />
-          <br />
+              <select
+                id="category"
+                name="category"
+                required
+                defaultValue={0}
+                onChange={(e) =>
+                  setRessource({
+                    ...ressource,
+                    idCategorie: Number(e.target.value),
+                  })
+                }
+                style={{
+                  borderRadius: "10px",
+                  width: "100%",
+                  padding: "10px",
+                  color: "grey",
+                  borderColor: "grey",
+                }}
+              >
+                <option value="0" disabled>
+                  Choisir une catégorie
+                </option>
+                {categories.map((categorie) => (
+                  <option key={categorie.id} value={categorie.id}>
+                    {categorie.nom}
+                  </option>
+                ))}
+              </select>
 
-          <label htmlFor="description">Description:</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            required
-            onChange={(e) => {
-              setRessource({
-                ...ressource,
-                contenu: e.target.value,
-              });
-            }}
-          />
-          <br />
+              <Spacer />
 
-          <label htmlFor="file">Fichier:</label>
-          <input
-            type="file"
-            id="file"
-            name="file"
-            onChange={handleFileChange}
-          />
-          <br />
+              <Input
+                type="file"
+                id="file"
+                name="file"
+                required
+                color="primary"
+                bordered
+                style={{
+                  padding: "10px",
+                }}
+                onChange={() => handleFileChange}
+              />
+              <Spacer />
 
-          {file && (
-            <div>
-              <img id="preview" alt="File preview" />
-            </div>
-          )}
+              {file.name && (
+                <div>
+                  <img id="preview" alt="File preview" />
+                </div>
+              )}
 
-          <label htmlFor="partage">Partage:</label>
-          <select id="partage" name="partage">
-            <option value="">Public</option>
-            <option value="prive">Privé</option>
-          </select>
-          <br />
+              <select
+                id="partage"
+                name="partage"
+                style={{
+                  borderRadius: "10px",
+                  width: "100%",
+                  padding: "10px",
+                }}
+              >
+                <option value="">Public</option>
+                <option value="prive">Privé</option>
+              </select>
+              <Spacer />
 
-          <button type="submit">Créer la ressource</button>
-        </form>
+              <Button type="submit">Créer la ressource</Button>
+
+              <Spacer />
+            </form>
+          </Card.Body>
+        </Card>
       </Suspense>
     </div>
   );
