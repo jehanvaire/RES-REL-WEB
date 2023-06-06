@@ -2,7 +2,7 @@
 
 import RessourcesService from "@/app/services/RessourcesService";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {
   ellipsisVertical,
@@ -26,6 +26,15 @@ import {
 const Ressource = ({ ressource }: any) => {
   const [liked, setLiked] = useState(false);
 
+  useEffect(() => {
+    const videos = document.getElementsByClassName(
+      "video"
+    ) as HTMLCollectionOf<Element>;
+    for (let i = 0; i < videos.length; i++) {
+      (videos[i] as HTMLVideoElement).volume = 0;
+    }
+  }, []);
+
   function LikePublication() {
     console.log("TODO: like publication", ressource);
     setLiked(!liked);
@@ -46,7 +55,7 @@ const Ressource = ({ ressource }: any) => {
   }
 
   return (
-    <Card style={{ display: "flex", flexDirection: "column" }}>
+    <Card>
       <Card.Body
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
@@ -74,14 +83,41 @@ const Ressource = ({ ressource }: any) => {
           </Row>
           <h2 style={{ margin: "10px 0" }}>{ressource.titre}</h2>
           <Text>{ressource.contenu}</Text>
-          <Image
-            src={
-              LiensTelechargementsEnum.PIECESJOINTEURL +
-              ressource.pieceJointe.id +
-              LiensTelechargementsEnum.DOWNLOAD
-            }
-            style={{ height: "400px" }}
-          />
+
+          {ressource.pieceJointe.type === "IMAGE" && (
+            <Image
+              src={
+                LiensTelechargementsEnum.PIECESJOINTEURL +
+                ressource.pieceJointe.id +
+                LiensTelechargementsEnum.DOWNLOAD
+              }
+              style={{ height: "400px" }}
+            />
+          )}
+          {ressource.pieceJointe.type === "VIDEO" && (
+            <video
+              className="video"
+              autoPlay
+              src={
+                LiensTelechargementsEnum.PIECESJOINTEURL +
+                ressource.pieceJointe.id +
+                LiensTelechargementsEnum.DOWNLOAD
+              }
+              style={{ height: "400px", width: "100%" }}
+              controls
+            ></video>
+          )}
+          {/* {ressource.pieceJointe.type === "PDF" && (
+            <embed
+              src={
+                LiensTelechargementsEnum.PIECESJOINTEURL +
+                ressource.pieceJointe.id +
+                LiensTelechargementsEnum.DOWNLOAD
+              }
+              style={{ height: "400px", width: "100%" }}
+            ></embed>
+          )} */}
+
           <Spacer y={1} />
           <div
             style={{
@@ -90,7 +126,7 @@ const Ressource = ({ ressource }: any) => {
               alignItems: "center",
             }}
           >
-            <Button onClick={LikePublication}>
+            <Button onPress={LikePublication}>
               {liked ? (
                 <IonIcon
                   icon={heart}
@@ -102,15 +138,15 @@ const Ressource = ({ ressource }: any) => {
               )}
             </Button>
             <div style={{ flex: 1 }}></div>
-            <Button onClick={ShowCommentsSection}>
+            <Button onPress={ShowCommentsSection}>
               <IonIcon icon={chatbubbleOutline} size="small"></IonIcon>
             </Button>
             <div style={{ flex: 1 }}></div>
-            <Button onClick={SauvegarderPublication}>
+            <Button onPress={SauvegarderPublication}>
               <IonIcon icon={bookmarksOutline} size="small"></IonIcon>
             </Button>
             <div style={{ flex: 1 }}></div>
-            <Button onClick={AfficherPlusOptions}>
+            <Button onPress={AfficherPlusOptions}>
               <IonIcon icon={ellipsisVertical} size="small" />
             </Button>
           </div>

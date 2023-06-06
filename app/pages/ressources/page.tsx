@@ -14,14 +14,28 @@ const RessourcesPage = () => {
   const [listeRessources, setListeRessources] = useState<RessourceEntity[]>([]);
 
   useEffect(() => {
-    RessourcesService.GetPublications(params).then((ressources) => {
+    RessourcesService.GetRessources(params).then((ressources) => {
       setListeRessources(ressources);
     });
   }, []);
 
   return (
-    <Container>
-      <h1>Ressources</h1>
+    <Container
+      css={{
+        maxWidth: "850px",
+        margin: "auto",
+      }}
+    >
+      <h1
+        style={{
+          textAlign: "center",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
+      >
+        Ressources
+      </h1>
+
       <Suspense fallback={<div>Chargement des ressources...</div>}>
         {listeRessources.map((ressource) => (
           <>
