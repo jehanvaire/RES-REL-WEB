@@ -22,6 +22,7 @@ import {
   Spacer,
   Text,
 } from "@nextui-org/react";
+import PdfPreview from "./PdfPreview";
 
 const Ressource = ({ ressource }: any) => {
   const [liked, setLiked] = useState(false);
@@ -107,16 +108,15 @@ const Ressource = ({ ressource }: any) => {
               controls
             ></video>
           )}
-          {/* {ressource.pieceJointe.type === "PDF" && (
-            <embed
-              src={
+          {ressource.pieceJointe.type === "PDF" && (
+            <PdfPreview
+              lien={
                 LiensTelechargementsEnum.PIECESJOINTEURL +
                 ressource.pieceJointe.id +
                 LiensTelechargementsEnum.DOWNLOAD
               }
-              style={{ height: "400px", width: "100%" }}
-            ></embed>
-          )} */}
+            />
+          )}
 
           <Spacer y={1} />
           <div
