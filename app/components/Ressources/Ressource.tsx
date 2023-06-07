@@ -23,6 +23,7 @@ import {
   Text,
 } from "@nextui-org/react";
 import PdfPreview from "./PdfPreview";
+import Link from "next/link";
 
 const Ressource = ({ ressource }: any) => {
   const [liked, setLiked] = useState(false);
@@ -108,7 +109,7 @@ const Ressource = ({ ressource }: any) => {
               controls
             ></video>
           )}
-          {ressource.pieceJointe.type === "PDF" && (
+          {/* {ressource.pieceJointe.type === "PDF" && (
             <PdfPreview
               lien={
                 LiensTelechargementsEnum.PIECESJOINTEURL +
@@ -116,7 +117,7 @@ const Ressource = ({ ressource }: any) => {
                 LiensTelechargementsEnum.DOWNLOAD
               }
             />
-          )}
+          )} */}
 
           <Spacer y={1} />
           <div
@@ -138,9 +139,9 @@ const Ressource = ({ ressource }: any) => {
               )}
             </Button>
             <div style={{ flex: 1 }}></div>
-            <Button onPress={ShowCommentsSection}>
+            <Link href={`/pages/commentaires/${ressource.id}`}>
               <IonIcon icon={chatbubbleOutline} size="small"></IonIcon>
-            </Button>
+            </Link>
             <div style={{ flex: 1 }}></div>
             <Button onPress={SauvegarderPublication}>
               <IonIcon icon={bookmarksOutline} size="small"></IonIcon>
