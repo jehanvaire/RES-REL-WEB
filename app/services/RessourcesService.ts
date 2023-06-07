@@ -30,7 +30,7 @@ class RessourcesService {
         return data;
       }
     
-      public async GetPublications(params: any = {}): Promise<RessourceEntity[]> {
+      public async GetRessources(params: any = {}): Promise<RessourceEntity[]> {
         const response = await this.restClient.get(this.baseUrl, params);
     
         const listePublications = response.data.map((publication: any) => {

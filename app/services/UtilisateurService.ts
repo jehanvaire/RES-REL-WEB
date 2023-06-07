@@ -8,6 +8,10 @@ class UtilisateurService {
   constructor() {
     this.restClient = new RestClient();
   }
+
+  public async getUtilisateurById(id: number) {
+    return await this.restClient.get(`${this.baseUrl}/${id}`);
+  }
 }
 
 export default new UtilisateurService();

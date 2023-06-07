@@ -47,6 +47,7 @@ const UtilisateurConnecteLinks = () => {
         <Avatar
           src="https://media.tenor.com/vxFNoJHV3I4AAAAC/chiquichico.gif"
           alt="Logo res rel"
+          squared
         />
       </Tooltip>
       <Spacer x={espacement} />
@@ -75,7 +76,7 @@ const Header = () => {
           <Spacer x={espacement} />
 
           <Link href="/">
-            <Avatar src={iconeResRel.src} alt="Logo res rel" />
+            <Avatar squared src={iconeResRel.src} alt="Logo res rel" />
           </Link>
 
           <Spacer x={espacement} />
