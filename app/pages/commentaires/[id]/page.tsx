@@ -29,6 +29,13 @@ const EspaceCommentairePage = ({ params: { id } }: any) => {
     loadCommentaires();
   }, []);
 
+  const sendOnEnterPress = (e: any) => {
+    if (e.key === "Enter") {
+      sendCommentaire();
+      setCommentaire("");
+    }
+  };
+
   function loadCommentaires() {
     const params = {
       "idRessource[equals]=": id,
@@ -155,9 +162,11 @@ const EspaceCommentairePage = ({ params: { id } }: any) => {
       </Suspense>
       <Input
         clearable
+        value={commentaire}
         contentRightStyling={false}
         placeholder="Type your message..."
         onChange={(e) => setCommentaire(e.target.value)}
+        onKeyDown={sendOnEnterPress}
         contentRight={
           <BoutonEnvoi
             onClick={() => {
@@ -182,6 +191,7 @@ const EspaceCommentairePage = ({ params: { id } }: any) => {
           width: "80%",
           left: "50%",
           transform: "translateX(-50%)",
+          marginBottom: "3rem",
         }}
       />
     </Container>
