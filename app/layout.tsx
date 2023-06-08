@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import Header from "./components/header";
 import { createTheme, NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import AuthentificationProvider from "./Providers";
 
 const lightTheme = createTheme({ type: "light" });
 const darkTheme = createTheme({ type: "dark" });
@@ -13,11 +14,11 @@ const poppins = Poppins({
   subsets: ["latin-ext"],
 });
 
-export default function RootLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: Props) {
   return (
     <html lang="fr">
       <head>
@@ -45,8 +46,10 @@ export default function RootLayout({
           }}
         >
           <NextUIProvider>
-            <Header />
-            <main className="container">{children}</main>
+            <AuthentificationProvider>
+              <Header />
+              <main className="container">{children}</main>
+            </AuthentificationProvider>
           </NextUIProvider>
         </NextThemesProvider>
       </body>
