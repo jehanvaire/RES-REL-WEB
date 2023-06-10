@@ -46,7 +46,7 @@ const UtilisateurConnecteLinks = () => {
       <Tooltip content={<AvatarTooltip />} placement="bottom">
         <Avatar
           src="https://media.tenor.com/vxFNoJHV3I4AAAAC/chiquichico.gif"
-          alt="Logo res rel"
+          alt="Photo profil"
           squared
         />
       </Tooltip>
