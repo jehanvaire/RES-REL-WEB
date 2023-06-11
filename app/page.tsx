@@ -1,21 +1,10 @@
+"use client";
 import React from "react";
-import { GetServerSideProps } from "next";
-import { checkAuth } from "./api/auth/auth";
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { session, redirect } = await checkAuth(context);
-
-  if (redirect) {
-    return { redirect };
-  }
-
-  // Any additional data fetching logic for the specific page
-
-  return { props: { session } };
-};
+import Authentification from "./components/Authentification";
+import withAuth from "./components/withauth";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return <Authentification>HomePage</Authentification>;
 };
 
-export default HomePage;
+export default withAuth(HomePage);

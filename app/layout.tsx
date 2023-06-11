@@ -1,13 +1,7 @@
-"use client";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import Header from "./components/header";
-import { createTheme, NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import AuthentificationProvider from "./Providers";
-
-const lightTheme = createTheme({ type: "light" });
-const darkTheme = createTheme({ type: "dark" });
+import Providers from "./Providers";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
@@ -37,21 +31,10 @@ export default function RootLayout({ children }: Props) {
         <link rel="icon" href="/assets/icon.png" />
       </head>
       <body className={poppins.className}>
-        <NextThemesProvider
-          defaultTheme="system"
-          attribute="class"
-          value={{
-            light: lightTheme.className,
-            dark: darkTheme.className,
-          }}
-        >
-          <NextUIProvider>
-            <AuthentificationProvider>
-              <Header />
-              <main className="container">{children}</main>
-            </AuthentificationProvider>
-          </NextUIProvider>
-        </NextThemesProvider>
+        <Providers>
+          <Header />
+          <main className="container">{children}</main>
+        </Providers>
       </body>
     </html>
   );
