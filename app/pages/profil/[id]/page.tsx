@@ -14,8 +14,11 @@ import {
   Text,
 } from "@nextui-org/react";
 import React, { Suspense, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const ProfilPage = ({ params: { id } }: any) => {
+  const { data: session } = useSession();
+
   const [utilisateur, setUtilisateur] = useState<UtilisateurEntity>(
     {} as UtilisateurEntity
   );
@@ -34,8 +37,9 @@ const ProfilPage = ({ params: { id } }: any) => {
     RessourcesService.GetRessources(params).then((res) => {
       setRessourcesUtilisateur(res);
     });
-  }, []);
+  }, [id]);
 
+  if (!session?.user) return <div>Vous n&apos;avez pas accès à cette page</div>;
   return (
     <Container>
       <h2

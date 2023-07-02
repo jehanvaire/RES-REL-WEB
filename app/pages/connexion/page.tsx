@@ -2,21 +2,29 @@
 // pages/login.js
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const router = useRouter();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      await signIn("credentials", {
-        mail: email,
-        motDePasse: password,
-        redirect: false,
-      });
-    } catch (error) {
-      console.error("Error signing in:", error);
+
+    const data = new FormData(e.currentTarget);
+
+    const signInReponse = await signIn("credentials", {
+      email: data.get("email"),
+      password: data.get("password"),
+      redirect: false,
+    });
+
+    if (signInReponse && !signInReponse.error) {
+      router.push("/pages/profil/3");
+    } else {
+      console.error("error");
     }
   };
 
